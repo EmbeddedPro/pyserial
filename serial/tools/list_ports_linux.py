@@ -88,7 +88,7 @@ class SysFS(list_ports_common.ListPortInfo):
             return None
 
 
-def comports(include_links=False):
+def comports(include_links=False, include_internal=False):
     devices = glob.glob('/dev/ttyS*')           # built-in serial ports
     devices.extend(glob.glob('/dev/ttyUSB*'))   # usb-serial with own driver
     devices.extend(glob.glob('/dev/ttyXRUSB*')) # xr-usb-serial port exar (DELL Edge 3001)
@@ -100,7 +100,7 @@ def comports(include_links=False):
         devices.extend(list_ports_common.list_links(devices))
     return [info
             for info in [SysFS(d) for d in devices]
-            if info.subsystem != "platform"]    # hide non-present internal serial ports
+            if info.subsystem != "platform"] or include_internal    # hide non-present internal serial ports
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # test
