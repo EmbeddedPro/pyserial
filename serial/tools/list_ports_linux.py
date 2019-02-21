@@ -100,7 +100,7 @@ def comports(include_links=False, include_internal=False):
         devices.extend(list_ports_common.list_links(devices))
     return [info
             for info in [SysFS(d) for d in devices]
-            if info.subsystem != "platform"] or include_internal    # hide non-present internal serial ports
+            if info.subsystem != "platform" or include_internal]    # hide non-present internal serial ports
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # test
